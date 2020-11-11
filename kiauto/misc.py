@@ -119,10 +119,10 @@ class Config(object):
         # Config file names
         self.kicad_conf_path = os.path.join(os.environ['HOME'], '.config/'+self.kicad_conf_dir)
         # - eeschema config
-        self.conf_eeschema = os.path.join(self.kicad_conf_path, 'eeschema-nightly')
+        self.conf_eeschema = os.path.join(self.kicad_conf_path, 'eeschema')
         self.conf_eeschema_bkp = None
         # - pcbnew config
-        self.conf_pcbnew = os.path.join(self.kicad_conf_path, 'pcbnew-nightly')
+        self.conf_pcbnew = os.path.join(self.kicad_conf_path, 'pcbnew')
         self.conf_pcbnew_bkp = None
         # - kicad config
         self.conf_kicad = os.path.join(self.kicad_conf_path, 'kicad_common')
