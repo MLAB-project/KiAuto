@@ -1,5 +1,6 @@
 *.pyc
 *.epr
+*.eeg-info
 */__pycache__/
 output/
 pp/

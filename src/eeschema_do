@@ -106,7 +106,7 @@ def dismiss_already_running():
 
 
 def wait_eeschema(cfg, time, others=None):
-    return wait_for_window('Main eeschema window', cfg.ee_window_title, time, others=others)
+    return wait_for_window('Main eeschema window', 'Eeschema', time, others=others)
 
 
 def wait_eeschema_start(cfg):
@@ -179,7 +179,7 @@ def exit_eeschema(cfg):
 def eeschema_plot_schematic(cfg):
     # KiCad 5.1 vs 5.99 differences
     if cfg.kicad_version >= KICAD_VERSION_5_99:
-        open_keys = ['ctrl+shift+p']
+        open_keys = ['alt+f', 'Up', 'Up', 'KP_Enter']
     else:
         open_keys = ['alt+f', 'l']
     # Put the file name in the clipboard
@@ -200,6 +200,13 @@ def eeschema_plot_schematic(cfg):
     wait_point(cfg)
     xdotool(['key', 'ctrl+v'])
     time.sleep(1)
+    # Set output format
+    logger.info("set output format")
+    #if 1: # pdf
+    # TODO: selection of output format
+    #xdotool(['key', 'Tab', 'Tab'])
+    #xdotool(['key', 'Up', 'Up', 'Up', 'KP_Space'])
+    #xdotool(['key', 'shift+Tab', 'shift+Tab'])
     # Press the "Plot xxx" button
     logger.info('Move to the "plot" button')
     wait_point(cfg)

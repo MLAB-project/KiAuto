@@ -100,20 +100,29 @@ class Config(object):
                          " Is KiCad installed?"
                          " Do you need to add it to PYTHONPATH?")
             exit(NO_PCBNEW_MODULE)
-        m = re.match(r'(\d+)\.(\d+)\.(\d+)', pcbnew.GetBuildVersion())
-        self.kicad_version_major = int(m.group(1))
-        self.kicad_version_minor = int(m.group(2))
-        self.kicad_version_patch = int(m.group(3))
+
+        # GetBuildVersion is missing in new versions of pcbnew
+        try:
+            m = re.match(r'(\d+)\.(\d+)\.(\d+)', pcbnew.GetBuildVersion())
+            self.kicad_version_major = int(m.group(1))
+            self.kicad_version_minor = int(m.group(2))
+            self.kicad_version_patch = int(m.group(3))
+        except Exception:
+            logger.debug("Newer version")
+            self.kicad_version_major = 5
+            self.kicad_version_minor = 99
+            self.kicad_version_patch = 99
+
         self.kicad_version = self.kicad_version_major*1000000+self.kicad_version_minor*1000+self.kicad_version_patch
         logger.debug('Detected KiCad v{}.{}.{} ({})'.format(self.kicad_version_major, self.kicad_version_minor,
                      self.kicad_version_patch, self.kicad_version))
         # Config file names
         self.kicad_conf_path = os.path.join(os.environ['HOME'], '.config/'+self.kicad_conf_dir)
         # - eeschema config
-        self.conf_eeschema = os.path.join(self.kicad_conf_path, 'eeschema')
+        self.conf_eeschema = os.path.join(self.kicad_conf_path, 'eeschema-nightly')
         self.conf_eeschema_bkp = None
         # - pcbnew config
-        self.conf_pcbnew = os.path.join(self.kicad_conf_path, 'pcbnew')
+        self.conf_pcbnew = os.path.join(self.kicad_conf_path, 'pcbnew-nightly')
         self.conf_pcbnew_bkp = None
         # - kicad config
         self.conf_kicad = os.path.join(self.kicad_conf_path, 'kicad_common')
